@@ -1,0 +1,54 @@
+// Interfaz del observador
+package Interface;
+public interface IObservadorTransaccion {
+    void notificar(String usuario, int monto);
+}
+
+// Sujeto que mantiene la lista de observadores
+package Service;
+import Interface.IObservadorTransaccion;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GestorEventos {
+    private List<IObservadorTransaccion> observadores = new ArrayList<>();
+
+    public void suscribir(IObservadorTransaccion obs) {
+        observadores.add(obs);
+    }
+
+    public void notificarTodos(String usuario, int monto) {
+        for (IObservadorTransaccion obs : observadores) {
+            obs.notificar(usuario, monto);
+        }
+    }
+}
+
+// Observador 1: Auditoría
+package Observer;
+import Interface.IObservadorTransaccion;
+
+public class AuditoriaObserver implements IObservadorTransaccion {
+    @Override
+    public void notificar(String usuario, int monto) {
+        System.out.println("[AUDITORÍA] Retiro registrado - Usuario: " + usuario + " | Monto: $" + monto);
+    }
+}
+
+// Observador 2: Alerta por monto alto
+package Observer;
+import Interface.IObservadorTransaccion;
+
+public class AlertaMontoObserver implements IObservadorTransaccion {
+    private static final int LIMITE = 500000;
+
+    @Override
+    public void notificar(String usuario, int monto) {
+        if (monto >= LIMITE) {
+            System.out.println("[ALERTA] Retiro de alto valor detectado: $" + monto + " por " + usuario);
+        }
+    }
+}
+
+// Integración en Cajero.java (agregar al método retirarDinero):
+// gestorEventos.notificarTodos(usuario.getNombre(), cantidad);
