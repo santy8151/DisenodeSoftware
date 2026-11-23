@@ -5,7 +5,7 @@
 
 # 📚 Ejercicios de Diseño de Software
 
-> Materia: Diseño de Software | Corporación Unificada Nacional de Educación Superior (CUN)  
+> Materia: Diseño de Software |ITM  
 > Tema: Patrones de Diseño y Arquitecturas Limpias — Java
 
 ---
